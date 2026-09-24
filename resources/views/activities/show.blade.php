@@ -9,4 +9,12 @@
     <p>Status: {{ $activity->status }}</p>
     <p>Deskripsi:</p>
     <p>{{ $activity->description ?? 'Tidak ada deskripsi.' }}</p>
+
+    <a href="{{ route('activities.edit', $activity) }}">Ubah</a>
+
+    <form method="POST" action="{{ route('activities.destroy', $activity) }}" onsubmit="return confirm('Yakin ingin menghapus kegiatan ini?')" style="display:inline">
+        @csrf
+        @method('DELETE')
+        <button type="submit">Hapus</button>
+    </form>
 @endsection
