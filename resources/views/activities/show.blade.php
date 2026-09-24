@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+
+    @if ($errors->has('status'))
+    <p style="color:red;">{{ $errors->first('status') }}</p>
+    @endif
+    
     <p><a href="{{ route('activities.index') }}">&larr; Kembali ke daftar</a></p>
 
     <h1>{{ $activity->title }}</h1>
