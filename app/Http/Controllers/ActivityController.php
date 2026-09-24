@@ -44,8 +44,11 @@ class ActivityController extends Controller
         return view('activities.edit', compact('activity'));
     }
 
-    public function update(UpdateActivityRequest $request, Activity $activity, ActivityService $service): RedirectResponse
-    {
+    public function update(
+        UpdateActivityRequest $request,
+        Activity $activity,
+        ActivityService $service
+    ): RedirectResponse    {
         try {
             $service->update($activity, $request->validated());
         } catch (DomainException $exception) {
