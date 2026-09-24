@@ -2,6 +2,17 @@
 
 @section('content')
     <h1>Daftar Kegiatan</h1>
+    
+    <form method="GET" action="{{ route('activities.index') }}">
+    <label for="status">Filter Status:</label>
+
+    <select name="status" id="status" onchange="this.form.submit()">
+        <option value="">Semua</option>
+        <option value="Planned" {{ $status === 'Planned' ? 'selected' : '' }}>Planned</option>
+        <option value="Ongoing" {{ $status === 'Ongoing' ? 'selected' : '' }}>Ongoing</option>
+        <option value="Done" {{ $status === 'Done' ? 'selected' : '' }}>Done</option>
+    </select>
+    </form>
 
     <p><a href="{{ route('activities.create') }}">+ Tambah Kegiatan</a></p>
 
