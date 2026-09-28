@@ -55,7 +55,7 @@ class ActivityController extends Controller
         UpdateActivityRequest $request,
         Activity $activity,
         ActivityService $service
-    ): RedirectResponse    {
+    ): RedirectResponse {
         try {
             $service->update($activity, $request->validated());
         } catch (DomainException $exception) {
