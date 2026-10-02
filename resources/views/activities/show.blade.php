@@ -17,6 +17,16 @@
     </p>
 
     <h1>{{ $activity->title }}</h1>
+
+    @if ($activity->poster_path)
+        <p>Poster:</p>
+        <img
+            src="{{ asset('storage/' . $activity->poster_path) }}"
+            alt="Poster {{ $activity->title }}"
+            width="300"
+        >
+    @endif
+
     <p>Tanggal: {{ $activity->activity_date->format('d M Y') }}</p>
     <p>Lokasi: {{ $activity->location ?? '-' }}</p>
     <p>Kapasitas: {{ $activity->capacity ?? '-' }}</p>

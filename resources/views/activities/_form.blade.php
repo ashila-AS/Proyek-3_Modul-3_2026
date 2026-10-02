@@ -68,6 +68,28 @@
 
 <br><br>
 
+<label for="poster">Poster (opsional, JPG/PNG, maks 2 MB)</label>
+<input
+    type="file"
+    id="poster"
+    name="poster"
+    accept="image/jpeg,image/png"
+>
+@error('poster')
+    <p style="color:red;">{{ $message }}</p>
+@enderror
+
+@if (isset($activity) && $activity->poster_path)
+    <p>Poster saat ini:</p>
+    <img
+        src="{{ asset('storage/' . $activity->poster_path) }}"
+        alt="Poster {{ $activity->title }}"
+        width="200"
+    >
+@endif
+
+<br><br>
+
 <label for="category_id">Kategori</label>
 <select name="category_id" id="category_id">
     <option value="">-- Pilih Kategori --</option>

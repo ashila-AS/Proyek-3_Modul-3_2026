@@ -5,10 +5,16 @@
 
     <h1>Ubah Kegiatan</h1>
 
-    <form method="POST" action="{{ route('activities.update', $activity) }}">
+    <form
+        method="POST"
+        action="{{ route('activities.update', $activity) }}"
+        enctype="multipart/form-data"
+    >
         @csrf
         @method('PUT')
+
         @include('activities._form')
+
         <button type="submit">Simpan Perubahan</button>
     </form>
 @endsection
