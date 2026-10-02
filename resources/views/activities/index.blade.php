@@ -37,6 +37,7 @@
     </form>
 
     <p><a href="{{ route('activities.create') }}">+ Tambah Kegiatan</a></p>
+    <p><a href="{{ route('activities.trash') }}">Lihat Kegiatan Terhapus</a></p>
 
     @forelse ($activities as $activity)
         <article class="card">

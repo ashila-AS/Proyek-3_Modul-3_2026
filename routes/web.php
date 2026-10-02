@@ -14,4 +14,10 @@ Route::patch('activities/{activity}/publish', [ActivityController::class, 'publi
 
 Route::patch('activities/{activity}/complete', [ActivityController::class, 'complete'])
     ->name('activities.complete');
-    
+
+Route::get('activities-trash', [ActivityController::class, 'trash'])
+    ->name('activities.trash');
+
+Route::patch('activities/{activity}/restore', [ActivityController::class, 'restore'])
+    ->name('activities.restore')
+    ->withTrashed();
