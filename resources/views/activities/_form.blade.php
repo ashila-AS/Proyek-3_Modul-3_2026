@@ -43,6 +43,31 @@
 
 <br><br>
 
+<label for="location">Lokasi</label>
+<input
+    id="location"
+    name="location"
+    value="{{ old('location', $activity->location ?? '') }}"
+>
+@error('location')
+    <p style="color:red;">{{ $message }}</p>
+@enderror
+
+<br><br>
+
+<label for="capacity">Kapasitas</label>
+<input
+    type="number"
+    id="capacity"
+    name="capacity"
+    value="{{ old('capacity', $activity->capacity ?? '') }}"
+>
+@error('capacity')
+    <p style="color:red;">{{ $message }}</p>
+@enderror
+
+<br><br>
+
 <label for="category_id">Kategori</label>
 <select name="category_id" id="category_id">
     <option value="">-- Pilih Kategori --</option>
@@ -57,23 +82,6 @@
     @endforeach
 </select>
 @error('category_id')
-    <p style="color:red;">{{ $message }}</p>
-@enderror
-
-<br><br>
-
-<label for="status">Status</label>
-<select name="status" id="status">
-    @foreach (['Planned', 'Ongoing', 'Done'] as $status)
-        <option
-            value="{{ $status }}"
-            @selected(old('status', $activity->status ?? 'Planned') === $status)
-        >
-            {{ $status }}
-        </option>
-    @endforeach
-</select>
-@error('status')
     <p style="color:red;">{{ $message }}</p>
 @enderror
 

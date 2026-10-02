@@ -9,24 +9,25 @@ use App\Models\Category;
 use App\Services\ActivityService;
 use DomainException;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class ActivityController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $status = request('status');
-
-        $validStatuses = ['Planned', 'Ongoing', 'Done'];
-
         $activities = Activity::query()
-            ->when(in_array($status, $validStatuses, true), function ($query) use ($status) {
-                $query->where('status', $status);
-            })
-            ->orderBy('activity_date')
-            ->get();
+            ->with('category')
+            ->search($request->query('search'))
+            ->ofCategory($request->query('category_id'))
+            ->ofStatus($request->query('status'))
+            ->sortByDate($request->query('sort'))
+            ->paginate(10)
+            ->withQueryString();
 
-        return view('activities.index', compact('activities', 'status'));
+        $categories = Category::orderBy('name')->get();
+
+        return view('activities.index', compact('activities', 'categories'));
     }
 
     public function create(): View
@@ -56,21 +57,36 @@ class ActivityController extends Controller
         return view('activities.edit', compact('activity', 'categories'));
     }
 
-    public function update(
-        UpdateActivityRequest $request,
-        Activity $activity,
-        ActivityService $service
-    ): RedirectResponse {
-        try {
-            $service->update($activity, $request->validated());
-        } catch (DomainException $exception) {
-            return back()
-                ->withErrors(['status' => $exception->getMessage()])
-                ->withInput();
-        }
+    public function update(UpdateActivityRequest $request, Activity $activity, ActivityService $service): RedirectResponse
+    {
+        $service->update($activity, $request->validated());
 
         return to_route('activities.show', $activity)
             ->with('success', 'Kegiatan berhasil diperbarui.');
+    }
+
+    public function publish(Activity $activity, ActivityService $service): RedirectResponse
+    {
+        try {
+            $service->publish($activity);
+        } catch (DomainException $exception) {
+            return back()->withErrors(['status' => $exception->getMessage()]);
+        }
+
+        return to_route('activities.show', $activity)
+            ->with('success', 'Kegiatan berhasil dipublikasikan.');
+    }
+
+    public function complete(Activity $activity, ActivityService $service): RedirectResponse
+    {
+        try {
+            $service->complete($activity);
+        } catch (DomainException $exception) {
+            return back()->withErrors(['status' => $exception->getMessage()]);
+        }
+
+        return to_route('activities.show', $activity)
+            ->with('success', 'Kegiatan berhasil diselesaikan.');
     }
 
     public function destroy(Activity $activity): RedirectResponse
