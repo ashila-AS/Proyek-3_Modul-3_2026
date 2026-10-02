@@ -32,6 +32,11 @@ class Activity extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function registrations()
+    {
+        return $this->hasMany(Registration::class);
+    }
+
     public function scopeSearch($query, ?string $keyword)
     {
         return $query->when($keyword, function ($query, $keyword) {
