@@ -32,9 +32,17 @@ abstract class ActivityRequest extends FormRequest
                     ->ignore($this->route('activity')),
             ],
 
-            'status' => [
+            'location' => [
                 'required',
-                Rule::in(['Planned', 'Ongoing', 'Done']),
+                'string',
+                'max:150',
+            ],
+
+            'capacity' => [
+                'required',
+                'integer',
+                'min:1',
+                'max:500',
             ],
         ];
     }
