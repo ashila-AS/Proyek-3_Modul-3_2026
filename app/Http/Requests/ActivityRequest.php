@@ -44,6 +44,22 @@ abstract class ActivityRequest extends FormRequest
                 'min:1',
                 'max:500',
             ],
+
+            'poster' => [
+                'nullable',
+                'image',
+                'mimes:jpg,jpeg,png',
+                'max:2048',
+            ],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'poster.image' => 'Poster harus berupa file gambar.',
+            'poster.mimes' => 'Poster harus berformat JPG, JPEG, atau PNG.',
+            'poster.max' => 'Ukuran poster maksimal 2 MB.',
         ];
     }
 }

@@ -18,6 +18,7 @@ class Activity extends Model
         'location',
         'capacity',
         'status',
+        'poster_path',
     ];
 
     protected function casts(): array
