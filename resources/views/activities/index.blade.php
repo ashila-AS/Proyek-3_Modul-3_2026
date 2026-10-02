@@ -24,7 +24,7 @@
                 </a>
             </h2>
             <p>{{ $activity->activity_date->format('d M Y') }}</p>
-            <p>Kategori: {{ $activity->category }}</p>
+            <p>Kategori: {{ $activity->category->name }}</p>
             <p>Status: {{ $activity->status }}</p>
         </article>
     @empty
